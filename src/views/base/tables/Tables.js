@@ -33,11 +33,18 @@ class Tables extends Component {
     })
   }
 
-  Tables(){
+  deleteOrder(index) {
+    let dataProductType = this.state.dataProductType
+    dataProductType.splice(index, 1)
+    localStorage.setItem("dataProductType", JSON.stringify(dataProductType))
+    this.setState({ dataProductType })
+  }
+
+  render(){
     const { dataProductType } = this.state
     return (
       <>  
-      <h1 class="text-left">User Management</h1>
+      <h1 className="text-left">User Management</h1>
         <CRow>
           <CCol>
             <CCard>
@@ -65,7 +72,7 @@ class Tables extends Component {
                     pagination
                     scopedSlots = {{
                       'actions':
-                      ()=>{
+                      (index)=>{
                         return (
                           <td className="py-2">
                             <CButton
@@ -74,7 +81,7 @@ class Tables extends Component {
                               // shape="square"
                               className="me-md-2"
                               size="sm"
-                              // onClick={()=>{toggleDetails(index)}}
+                              onClick={() => this.deleteOrder(index)}
                             >
                               Delete User
                             </CButton>
@@ -87,7 +94,7 @@ class Tables extends Component {
                 </CRow>
                 <CRow>
                   <CCol>
-                  <div class="d-grid d-md-flex justify-content-md-end">
+                  <div className="d-grid d-md-flex justify-content-md-end">
                     <CButton 
                       color="primary"
                       className="me-md-2" 

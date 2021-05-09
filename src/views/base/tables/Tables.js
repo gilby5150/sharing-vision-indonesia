@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { SVIServices } from './../../../service';
 import {
-  CBadge,
   CCard,
   CCardBody,
   CCardHeader,
@@ -9,228 +10,100 @@ import {
   CRow,
   CButton
 } from '@coreui/react'
-import { DocsLink } from 'src/reusable'
 
-import usersData from '../../users/UsersData'
+class Tables extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // language: localStorage.getItem('language'),
+      // selectedKeys: 0,
+      dataProductType: [],
+      // productSelected: [],
+    };
+  }
 
-// const getBadge = status => {
-//   switch (status) {
-//     case 'Active': return 'success'
-//     case 'Inactive': return 'secondary'
-//     case 'Pending': return 'warning'
-//     case 'Banned': return 'danger'
-//     default: return 'primary'
-//   }
-// }
-const fields = ['userName','name', 'password']
+  componentDidMount() {
+    SVIServices.getProductType()
+    .then(res => {
+      // console.log(res)
+      this.setState({
+        dataProductType: res.data.data,
+        // productSelected: res.data.data[this.state.selectedKeys],
+      })
+    })
+  }
 
-const Tables = () => {
-  return (
-    <>  
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              Data User
-            </CCardHeader>
-            <CCardBody>
-              <CRow>
-                <CCol>
-                <CDataTable
-                  items={usersData}
-                  fields={fields}
-                  itemsPerPage={5}
-                  pagination
-                  // scopedSlots = {{
-                  //   'status':
-                  //     (item)=>(
-                  //       <td>
-                  //         <CBadge color={getBadge(item.status)}>
-                  //           {item.status}
-                  //         </CBadge>
-                  //       </td>
-                  //     )
-
-                  // }}
-                />
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" lg="6">
-                  <CButton
-                    color="primary"
-                    className={'mb-1'}
-                  >
-                    Create User
-                  </CButton>
-                </CCol>
-                <CCol xs="12" lg="6">
-                  <CButton
-                    color="danger"
-                    className={'mb-1'}
-                  >
-                    Delete User
-                  </CButton>
-                </CCol>
-              </CRow>
-            </CCardBody>
-          </CCard>
-        </CCol>
-
-        {/* <CCol xs="12" lg="6">
-          <CCard>
-            <CCardHeader>
-              Striped Table
-            </CCardHeader>
-            <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              striped
-              itemsPerPage={5}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
-
-              }}
-            />
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
-
-      <CRow>
-
-        <CCol xs="12" lg="6">
-          <CCard>
-            <CCardHeader>
-              Condensed Table
-            </CCardHeader>
-            <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              size="sm"
-              itemsPerPage={5}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
-
-              }}
-            />
-            </CCardBody>
-          </CCard>
-        </CCol>
-
-        <CCol xs="12" lg="6">
-          <CCard>
-            <CCardHeader>
-              Bordered Table
-            </CCardHeader>
-            <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              bordered
-              itemsPerPage={5}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
-
-              }}
-            />
-            </CCardBody>
-          </CCard>
-        </CCol>
-
-      </CRow>
-
-      <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              Combined All Table
-            </CCardHeader>
-            <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              hover
-              striped
-              bordered
-              size="sm"
-              itemsPerPage={10}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
-              }}
-            />
-            </CCardBody>
-          </CCard>
-        </CCol>
-      </CRow>
+  Tables(){
+    const { dataProductType } = this.state
+    return (
+      <>  
+      <h1 class="text-left">User Management</h1>
         <CRow>
-        <CCol>
-          <CCard>
-            <CCardHeader>
-              Combined All dark Table
-            </CCardHeader>
-            <CCardBody>
-            <CDataTable
-              items={usersData}
-              fields={fields}
-              dark
-              hover
-              striped
-              bordered
-              size="sm"
-              itemsPerPage={10}
-              pagination
-              scopedSlots = {{
-                'status':
-                  (item)=>(
-                    <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
-                    </td>
-                  )
-              }}
-            />
-            </CCardBody>*/}
-            {/* </CCard>  */}
-        {/* </CCol> */}
-      </CRow>
-    </>
-  )
+          <CCol>
+            <CCard>
+              <CCardHeader>
+                Data User
+              </CCardHeader>
+              <CCardBody>
+                <CRow>
+                  <CCol>
+                  <CDataTable
+                    items={dataProductType}
+                    fields={[
+                      'username',
+                      'name',
+                      'password',
+                      {
+                        key: 'actions',
+                        label: '',
+                        _style: { width: '1%' },
+                        sorter: false,
+                        filter: false
+                      }
+                    ]}
+                    itemsPerPage={5}
+                    pagination
+                    scopedSlots = {{
+                      'actions':
+                      ()=>{
+                        return (
+                          <td className="py-2">
+                            <CButton
+                              color="danger"
+                              // variant="outline"
+                              // shape="square"
+                              className="me-md-2"
+                              size="sm"
+                              // onClick={()=>{toggleDetails(index)}}
+                            >
+                              Delete User
+                            </CButton>
+                          </td>
+                          )
+                      }
+                    }}
+                  />
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol>
+                  <div class="d-grid d-md-flex justify-content-md-end">
+                    <CButton 
+                      color="primary"
+                      className="me-md-2" 
+                      href="#/base/forms"
+                    >
+                      Create User
+                    </CButton>
+                  </div>
+                  </CCol>
+                </CRow>
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
+      </>
+    )
+  }
 }
-
-export default Tables
+export default withRouter(Tables)

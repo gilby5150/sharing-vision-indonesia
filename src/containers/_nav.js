@@ -12,6 +12,11 @@ const _nav =  [
           _tag: 'CSidebarNavItem',
           name: 'Tables',
           to: '/base/tables',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Forms',
+          to: '/base/forms',
         }
       ]
   }
